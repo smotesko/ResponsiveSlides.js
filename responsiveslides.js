@@ -28,7 +28,8 @@
       "manualControls": "",     // Selector: Declare custom pager navigation
       "namespace": "rslides",   // String: change the default namespace used
       "before": $.noop,         // Function: Before callback
-      "after": $.noop           // Function: After callback
+      "after": $.noop,          // Function: After callback
+      "gotoevent": undefined    // Event for sliding to the particular slide
     }, options);
 
     return this.each(function () {
@@ -126,6 +127,12 @@
               });
           }
         };
+
+      if (settings.gotoevent !== undefined) {
+        $(document).on(settings.gotoevent, function(e, eventinfo){
+          slideTo(eventinfo.idx);
+        });
+      }
 
       // Random order
       if (settings.random) {
